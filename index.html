@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MARIVO | Nigerian Wedding Board Game</title>
+<meta name="description" content="MARIVO is a Nigerian wedding board game for 2 to 5 players. Journey through a Nigerian wedding, from introduction and engagement to the honeymoon. A party game for weddings, bridal showers and family game night.">
+<meta name="keywords" content="MARIVO, Nigerian wedding board game, wedding party game, bridal shower game, wedding game, love stories, family board game, Nigeria">
+<link rel="canonical" href="https://www.marivogames.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MARIVO">
+<meta property="og:title" content="MARIVO | Nigerian Wedding Board Game">
+<meta property="og:description" content="Your personal wedding experience. A board game that takes you through a Nigerian wedding, from the first family introduction to the honeymoon.">
+<meta property="og:url" content="https://www.marivogames.com/">
+<meta property="og:image" content="https://www.marivogames.com/img/board.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"MARIVO","category":"Board game","description":"A Nigerian themed wedding board game that celebrates the intricacies of wedding and marriage. 2 to 5 players, ages 13 and up, 30 to 45 minutes.","brand":{"@type":"Brand","name":"MARIVO"},"manufacturer":{"@type":"Organization","name":"Marivo Board Game Limited"},"url":"https://www.marivogames.com/"}</script>
+<meta name="theme-color" content="#352665">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preload" href="fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/Quicksand-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="img/board.webp" as="image">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- LOADER: two dice land, then the wedding car drives across the board. Under two seconds. -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__scene" id="loader-scene">
+    <img class="loader__board" id="loader-board" src="img/board.webp" alt="" width="1400" height="1399">
+    <div class="loader__dice" id="loader-dice"><span class="die"><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i><i></i><i class="on"></i></span><span class="die"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></div>
+    <div class="loader__car" id="loader-car"><svg class="car" viewBox="0 0 220 112" aria-hidden="true" focusable="false">
+  <g class="car__cans">
+    <path d="M36 80Q22 84 9 95" fill="none" stroke="#F7F7F6" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="1" y="91" width="10" height="13" rx="2.5" fill="#FFCE3A" transform="rotate(-24 6 97)"/>
+    <path d="M36 80Q28 92 23 99" fill="none" stroke="#F7F7F6" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="16" y="96" width="10" height="13" rx="2.5" fill="#00B6ED" transform="rotate(14 21 102)"/>
+  </g>
+  <g class="car__body">
+    <path d="M34 84V66q0-10 12-12l24-4q14-24 42-24h26q22 0 34 22l24 6q14 4 14 16v14z" fill="#F7F7F6"/>
+    <path d="M80 50q10-16 30-16h8v16z" fill="#00B6ED"/>
+    <path d="M124 34h14q14 0 23 16h-37z" fill="#00B6ED"/>
+    <rect x="34" y="74" width="176" height="10" rx="3" fill="#EA5297"/>
+    <circle cx="204" cy="65" r="4.5" fill="#FFCE3A"/>
+    <path d="M121 70c0 0-9-5.500-9-11.500 0-3 2.300-5 4.800-5 1.800 0 3.400 1 4.200 2.600 0.800-1.600 2.400-2.600 4.200-2.600 2.500 0 4.800 2 4.800 5 0 6-9 11.500-9 11.500z" fill="#D63E43"/>
+    <path d="M124 26l-13-9v13zM124 26l13-9v13z" fill="#EA5297"/>
+    <circle cx="124" cy="24" r="4" fill="#FFCE3A"/>
+  </g>
+  <g class="car__wheel"><circle cx="72" cy="88" r="15" fill="#000012"/><circle cx="72" cy="88" r="6.500" fill="#F7F7F6"/><rect x="70.800" y="74" width="2.400" height="28" rx="1.200" fill="#F7F7F6" opacity=".55"/></g>
+  <g class="car__wheel"><circle cx="174" cy="88" r="15" fill="#000012"/><circle cx="174" cy="88" r="6.500" fill="#F7F7F6"/><rect x="172.800" y="74" width="2.400" height="28" rx="1.200" fill="#F7F7F6" opacity=".55"/></g>
+</svg></div>
+  </div>
+  <p class="loader__pct"><span id="loader-pct">0</span>%</p>
+  <p class="loader__text">Off to the wedding</p>
+</div>
+
+<template id="car-tpl"><svg class="car" viewBox="0 0 220 112" aria-hidden="true" focusable="false">
+  <g class="car__cans">
+    <path d="M36 80Q22 84 9 95" fill="none" stroke="#F7F7F6" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="1" y="91" width="10" height="13" rx="2.5" fill="#FFCE3A" transform="rotate(-24 6 97)"/>
+    <path d="M36 80Q28 92 23 99" fill="none" stroke="#F7F7F6" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="16" y="96" width="10" height="13" rx="2.5" fill="#00B6ED" transform="rotate(14 21 102)"/>
+  </g>
+  <g class="car__body">
+    <path d="M34 84V66q0-10 12-12l24-4q14-24 42-24h26q22 0 34 22l24 6q14 4 14 16v14z" fill="#F7F7F6"/>
+    <path d="M80 50q10-16 30-16h8v16z" fill="#00B6ED"/>
+    <path d="M124 34h14q14 0 23 16h-37z" fill="#00B6ED"/>
+    <rect x="34" y="74" width="176" height="10" rx="3" fill="#EA5297"/>
+    <circle cx="204" cy="65" r="4.5" fill="#FFCE3A"/>
+    <path d="M121 70c0 0-9-5.500-9-11.500 0-3 2.300-5 4.800-5 1.800 0 3.400 1 4.200 2.600 0.800-1.600 2.400-2.600 4.200-2.600 2.500 0 4.800 2 4.800 5 0 6-9 11.500-9 11.500z" fill="#D63E43"/>
+    <path d="M124 26l-13-9v13zM124 26l13-9v13z" fill="#EA5297"/>
+    <circle cx="124" cy="24" r="4" fill="#FFCE3A"/>
+  </g>
+  <g class="car__wheel"><circle cx="72" cy="88" r="15" fill="#000012"/><circle cx="72" cy="88" r="6.500" fill="#F7F7F6"/><rect x="70.800" y="74" width="2.400" height="28" rx="1.200" fill="#F7F7F6" opacity=".55"/></g>
+  <g class="car__wheel"><circle cx="174" cy="88" r="15" fill="#000012"/><circle cx="174" cy="88" r="6.500" fill="#F7F7F6"/><rect x="172.800" y="74" width="2.400" height="28" rx="1.200" fill="#F7F7F6" opacity=".55"/></g>
+</svg></template>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#top" aria-label="MARIVO home"><img src="img/marivo-logo.svg" alt="MARIVO" width="110" height="44"></a>
+  <nav aria-label="Main">
+    <ul class="nav__links" id="menu">
+      <li><a href="#about">About the game</a></li>
+      <li><a href="#win">How to win</a></li>
+      <li><a href="#how-to-play">How to play</a></li>
+      <li><a href="#box">In the box</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="#glossary">Word meanings</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="nav__links-buy"><a href="#buy">Buy now</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn--yellow btn--sm nav__buy" href="#buy">Buy now</a>
+  <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
+</header>
+
+<main id="main">
+  <!-- HERO + BOARD TOUR.
+       PRD 10.3: "use the existing board design as a guide". The real board (from the rulebook) leads the page.
+       PRD 6.1: the hero message is what the game is about. PRD 6.2: the tagline. PRD 4.2: Buy is the main action.
+       Space names in the captions are copied from the board. -->
+  <section class="tour" id="top" aria-labelledby="hero-title">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="pat pat--petals" aria-hidden="true"></div>
+    <div class="tour__stage" id="tour-stage">
+      <div class="hero__inner" id="hero-copy">
+        <p class="hero__tag" data-in>The Nigerian wedding board game</p>
+        <h1 id="hero-title" aria-label="Your personal wedding experience"><span class="w"><span>Your</span></span> <span class="w"><span>personal</span></span> <span class="w"><span>wedding</span></span> <span class="w"><span class="ido">experience</span></span></h1>
+        <p class="hero__lede" data-in>MARIVO takes you through a Nigerian wedding, from the first family introduction all the way to the honeymoon.</p>
+        <div class="hero__cta" data-in>
+          <a class="btn btn--yellow" href="#buy">Buy now</a>
+          <a class="btn btn--ghost" href="#how-to-play">How to play</a>
+        </div>
+      </div>
+
+      <img class="float float--dice" data-depth="1" src="img/dice.webp" alt="" width="700" height="489">
+      <img class="float float--note" data-depth="0.6" src="img/note.webp" alt="" width="700" height="369">
+      <img class="float float--card-a" data-depth="0.8" src="img/card-blessing.webp" alt="" width="454" height="700">
+      <img class="float float--card-b" data-depth="0.5" src="img/card-wahala.webp" alt="" width="460" height="700">
+
+      <div class="board" id="board">
+        <div class="board__tilt" id="board-tilt">
+          <img class="board__img" src="img/board.webp" alt="The MARIVO game board. It has four coloured sides: Introduction and Engagement, Wedding Ceremony, Reception, and Honeymoon. START is in one corner." width="1400" height="1399">
+        </div>
+        <img class="board__piece" id="tour-piece" src="img/piece.webp" alt="" width="700" height="699">
+      </div>
+
+      <ol class="tour__caps" id="tour-caps" role="list">
+        <li class="cap" style="--c:#EA5297">
+          <span class="cap__n" aria-hidden="true">1</span>
+          <h2 class="cap__t">Introduction and Engagement</h2>
+          <p>You start here, on the pink side.</p>
+          <ul class="cap__chips" role="list"><li>Family Name Search</li><li>Letter of Intent</li><li>Bring the Bridal List</li><li>Dowry</li></ul>
+        </li>
+        <li class="cap" style="--c:#00B6ED">
+          <span class="cap__n" aria-hidden="true">2</span>
+          <h2 class="cap__t">Wedding Ceremony</h2>
+          <p>Next comes the blue side: the big day.</p>
+          <ul class="cap__chips" role="list"><li>Bridal Entry with Father</li><li>Put a Ring on It</li><li>Zenche</li><li>You May Kiss the Bride</li></ul>
+        </li>
+        <li class="cap" style="--c:#75B94E">
+          <span class="cap__n" aria-hidden="true">3</span>
+          <h2 class="cap__t">Reception</h2>
+          <p>Then the green side: time to celebrate.</p>
+          <ul class="cap__chips" role="list"><li>The Couple’s Grand Entry</li><li>Naija Jollof Rice Time</li><li>Cutting the Cake</li><li>First Dance: Naira Rain</li></ul>
+        </li>
+        <li class="cap" style="--c:#F28A3D">
+          <span class="cap__n" aria-hidden="true">4</span>
+          <h2 class="cap__t">Honeymoon</h2>
+          <p>Last, the orange side.</p>
+          <ul class="cap__chips" role="list"><li>DND: Just Married</li><li>Dream Honeymoon Destination?</li><li>Let’s Stay Here All Day</li><li>Just Like That… We’re Back</li></ul>
+        </li>
+        <li class="cap" style="--c:#FFCE3A">
+          <span class="cap__n" aria-hidden="true">5</span>
+          <h2 class="cap__t">Collect 5 Knot Keys to win</h2>
+          <p>Three are won on corners of the board: Venue, Holy Book and Officiant. The other two, Spouse and Ring, are hidden in the Blessing Time cards.</p>
+        </li>
+      </ol>
+      <p class="tour__hint" data-in aria-hidden="true">Scroll to walk round the board</p>
+    </div>
+  </section>
+
+  <!-- QUICK FACTS. PRD 7.4 says new players get the age limit and player count wrong, so they sit right under the opening.
+       Age: the PRD and the approved FAQ both say 13+. The rulebook cover prints 14+. Confirm with client. -->
+  <section class="facts-bar" aria-label="Game facts">
+    <ul class="wrap facts-bar__list" role="list">
+      <li><b>2–5</b><span>players</span></li>
+      <li><b>13+</b><span>ages</span></li>
+      <li><b>30–45</b><span>minutes a game</span></li>
+      <li><b>Easy</b><span>beginner-friendly</span></li>
+    </ul>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sheet sheet--yellow about" id="about" aria-labelledby="about-title">
+    <div class="pat pat--confetti" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="about__intro">
+        <div>
+          <h2 id="about-title" class="h2" data-split>What is MARIVO?</h2>
+          <p class="lede" data-reveal>MARIVO is a Nigerian wedding board game. It celebrates everything that goes into a wedding and a marriage.</p>
+          <p class="lede" data-reveal>You plan and pay with game money, just like a real wedding, so you have to think about the best way to win.</p>
+        </div>
+        <img class="about__art" data-reveal src="img/hero-characters.webp" alt="Six wedding guests in traditional Nigerian clothes, standing arm in arm" width="1600" height="640" loading="lazy">
+      </div>
+
+    </div>
+    <div class="ticker" aria-hidden="true"><div class="ticker__row" id="ticker">Every choice leads closer to “I do” <i></i> Every choice leads closer to “I do” <i></i> Every choice leads closer to “I do” <i></i> Every choice leads closer to “I do” <i></i> Every choice leads closer to “I do” <i></i> </div></div>
+  </section>
+
+  <!-- HOW DO YOU WIN? Its own section, because collecting the 5 Knot Keys is the clearest way to explain the game (PRD 2.2). -->
+  <section class="sheet sheet--purple win" id="win" aria-labelledby="win-title">
+    <div class="pat pat--petals" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 id="win-title" class="h2 h2--center" data-split>How do you win?</h2>
+      <p class="lede lede--center" data-reveal>Collect all 5 Knot Key cards. Tap each card to collect it.</p>
+      <div class="win__bar" data-reveal>
+        <div class="win__track"><span class="win__fill" id="win-fill"></span></div>
+        <p class="win__count" role="status" aria-live="polite"><b id="win-n">0</b> of 5 collected</p>
+      </div>
+      <ul class="keys" id="keys" role="list">
+        <li>
+          <button class="key" type="button" aria-pressed="false" style="--tint:#fde3ee" aria-label="Spouse Secured. You need a spouse to get married. Tap to collect.">
+            <span class="key__flip">
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--front"><span class="key__art key__art--heart"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M50 84C50 84 6 56 6 28 6 14 17 5 29 5c9 0 17 5 21 13C54 10 62 5 71 5c12 0 23 9 23 23 0 28-44 56-44 56z" fill="#D63E43"/></svg></span><b>Spouse Secured</b><span class="key__why">You need a spouse to get married.</span></span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="key" type="button" aria-pressed="false" style="--tint:#d9f3fc" aria-label="Ring Secured. You need a ring to propose. Tap to collect.">
+            <span class="key__flip">
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--front"><span class="key__art"><img src="img/ring.webp" alt="" width="700" height="700" loading="lazy"></span><b>Ring Secured</b><span class="key__why">You need a ring to propose.</span></span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="key" type="button" aria-pressed="false" style="--tint:#e4f2da" aria-label="Venue Secured. The wedding needs a place. Tap to collect.">
+            <span class="key__flip">
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--front"><span class="key__art key__art--fill"><img src="img/venue-2.webp" alt="" width="700" height="700" loading="lazy"></span><b>Venue Secured</b><span class="key__why">The wedding needs a place.</span></span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="key" type="button" aria-pressed="false" style="--tint:#fde8d6" aria-label="Officiant Secured. A religious, traditional or government official must join the couple. Tap to collect.">
+            <span class="key__flip">
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--front"><span class="key__art"><img src="img/officiant.webp" alt="" width="700" height="700" loading="lazy"></span><b>Officiant Secured</b><span class="key__why">A religious, traditional or government official must join the couple.</span></span>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button class="key" type="button" aria-pressed="false" style="--tint:#fff3cc" aria-label="Holy Book. A guide to your duties as a couple. Tap to collect.">
+            <span class="key__flip">
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--front"><span class="key__art"><img src="img/holybook.webp" alt="" width="700" height="700" loading="lazy"></span><b>Holy Book</b><span class="key__why">A guide to your duties as a couple.</span></span>
+            </span>
+          </button>
+        </li>
+      </ul>
+      <p class="swipe-hint" aria-hidden="true">Swipe to see all 5</p>
+      <div class="win__done" id="win-done" hidden>
+        <p class="win__shout">That is all 5. You win!</p>
+        <a class="btn btn--yellow" href="#how-to-play">Now see how to play</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <section class="sheet play" id="how-to-play" aria-labelledby="play-title">
+    <div class="play__run" id="play-run">
+    <div class="play__pin" id="play-pin">
+      <div class="play__top">
+        <h2 id="play-title" class="h2">How to play</h2>
+        <!-- The client asked for these three points to be shown (PRD 7.4): age limit, number of players, read the rules first. -->
+        <p class="play__note">2–5 players · Ages 13+ · Read the rulebook before you play</p>
+      </div>
+
+      <div class="play__grid">
+        <!-- The board shows what each step says. Positions are taken from the real board. -->
+        <div class="scene" id="scene" aria-hidden="true">
+          <img class="scene__board" src="img/board.webp" alt="" width="1400" height="1399" loading="lazy">
+          <svg class="scene__arrow" viewBox="0 0 100 100"><path id="scene-arrow" d="M24 80H76Q80 80 80 76V24Q80 20 76 20H24Q20 20 20 24V70" pathLength="100"/><path class="scene__arrowhead" d="M14.500 66L20 76L25.500 66Z"/></svg>
+          <span class="glow" data-glow="start" style="--x:7.500%;--y:92.500%"></span>
+          <span class="glow" data-glow="bless" style="--x:46.200%;--y:92.500%"></span>
+          <span class="glow" data-glow="deck" style="--x:33.800%;--y:70.200%"></span>
+          <span class="glow" data-glow="venue" style="--x:92.500%;--y:92.500%"></span>
+          <span class="glow" data-glow="holy" style="--x:92.500%;--y:7.500%"></span>
+          <span class="glow" data-glow="officiant" style="--x:7.500%;--y:7.500%"></span>
+          <img class="pile pile--bless" src="img/card-blessing.webp" alt="" width="454" height="700">
+          <img class="pile pile--wahala" src="img/card-wahala.webp" alt="" width="460" height="700">
+          <img class="scene__piece" id="scene-piece" src="img/piece.webp" alt="" width="700" height="699">
+          <div class="scene__dim" id="scene-dim"></div>
+          <div class="scene__notes" id="scene-notes"><img src="img/note.webp" alt="" width="700" height="369"><img src="img/note.webp" alt="" width="700" height="369"><img src="img/note.webp" alt="" width="700" height="369"><b id="scene-amount">₦710,000</b></div>
+          <div class="scene__dice" id="dice-a"><span class="die"><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i></span><span class="die"><i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i></span><b>Highest roll starts</b></div>
+          <div class="scene__dice" id="dice-b"><span class="die"><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i></span><span class="die"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span><b>3 + 2 = move 5</b></div>
+          <div class="scene__draw" id="scene-draw"><img src="img/card-blessing.webp" alt="" width="454" height="700"><b>Take a card. Do what it says.</b></div>
+          <div class="scene__tray" id="scene-tray"><span class="slot" data-slot="0"><span class="key__art key__art--heart"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M50 84C50 84 6 56 6 28 6 14 17 5 29 5c9 0 17 5 21 13C54 10 62 5 71 5c12 0 23 9 23 23 0 28-44 56-44 56z" fill="#D63E43"/></svg></span></span><span class="slot" data-slot="1"><span class="key__art"><img src="img/ring.webp" alt="" width="700" height="700"></span></span><span class="slot" data-slot="2"><span class="key__art key__art--fill"><img src="img/venue-2.webp" alt="" width="700" height="700"></span></span><span class="slot" data-slot="3"><span class="key__art"><img src="img/officiant.webp" alt="" width="700" height="700"></span></span><span class="slot" data-slot="4"><span class="key__art"><img src="img/holybook.webp" alt="" width="700" height="700"></span></span></div>
+          <div class="scene__ido" id="scene-ido"><div class="confetti" id="confetti"></div><b>I do!</b></div>
+        </div>
+
+        <ol class="beats" id="beats">
+          <li class="beat"><span class="beat__n" aria-hidden="true">1</span><h3 class="beat__t">Set up the board</h3><p>Put the board on a flat surface. Shuffle the Blessing Time and Wedding Wahala cards, and place each pile face down in its space.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">2</span><h3 class="beat__t">Pick a Banker</h3><p>Agree on one player to be the Banker. The Banker gives every player ₦710,000.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">3</span><h3 class="beat__t">Everyone to START</h3><p>Each player picks a game piece and puts it on START.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">4</span><h3 class="beat__t">Who goes first?</h3><p>Everyone rolls both dice. The highest number starts. Then play goes anti-clockwise, the way the arrow points.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">5</span><h3 class="beat__t">Roll and move</h3><p>On your turn, roll both dice and move that many spaces.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">6</span><h3 class="beat__t">Do what the space says</h3><p>Landed on Blessing Time or Wedding Wahala? Take one card from that pile and do what it says.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">7</span><h3 class="beat__t">Collect the 5 Knot Keys</h3><p>Spouse and Ring are hidden in the Blessing Time cards. Win Venue, Holy Book and Officiant by landing on their corners.</p></li>
+          <li class="beat"><span class="beat__n" aria-hidden="true">8</span><h3 class="beat__t">You win!</h3><p>Collect all 5 Knot Keys and you win. Everyone claps for the winner.</p></li>
+        </ol>
+      </div>
+
+      <div class="play__progress">
+        <div class="dots"><button class="dot-btn" type="button" data-go="0" aria-label="Go to step 1: Set up the board"></button><button class="dot-btn" type="button" data-go="1" aria-label="Go to step 2: Pick a Banker"></button><button class="dot-btn" type="button" data-go="2" aria-label="Go to step 3: Everyone to START"></button><button class="dot-btn" type="button" data-go="3" aria-label="Go to step 4: Who goes first?"></button><button class="dot-btn" type="button" data-go="4" aria-label="Go to step 5: Roll and move"></button><button class="dot-btn" type="button" data-go="5" aria-label="Go to step 6: Do what the space says"></button><button class="dot-btn" type="button" data-go="6" aria-label="Go to step 7: Collect the 5 Knot Keys"></button><button class="dot-btn" type="button" data-go="7" aria-label="Go to step 8: You win!"></button></div>
+        <p class="play__count">Step <b id="step-now">1</b> of 8<span class="play__keep"> · keep scrolling</span></p>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="wrap play__after">
+      <div class="know" data-reveal>
+        <h3 class="h3">Good to know</h3>
+        <ul class="know__list" role="list">
+          <li>Rolled two sixes? Roll again.</li>
+          <li>Got the same Knot Key twice? Swap it with another player, if you both agree.</li>
+          <li>Out of money and cannot pay? You are out of the game.</li>
+          <li>The Banker gives out the money and Knot Keys, helps settle arguments, must be fair, and still plays.</li>
+          <li>Other spaces can give you money or cards. Some make you pay, or give you a challenge.</li>
+          <li>Two players can stand on the same space.</li>
+          <li>Optional: before you start, players can agree to give the winner real money or gifts.</li>
+        </ul>
+      </div>
+      <div class="ready">
+        <div class="ready__card" data-reveal>
+          <h3 class="h3">Before you play</h3>
+          <ol class="ready__list">
+            <li>Get 2 to 5 players together.</li>
+            <li>Everyone should be 13 or older.</li>
+            <li>Set aside 30 to 45 minutes.</li>
+            <li>Read the rulebook first.</li>
+          </ol>
+          <a class="btn btn--ink" href="downloads/MARIVO-Rulebook.pdf" download>Download the rulebook</a>
+        </div>
+        <!-- The tutorial video (PRD 4.3 and section 5). Made from the same 8 steps. It has no sound, and the words are on screen. -->
+        <div class="ready__video" data-reveal>
+          <h3 class="h3">Watch how to play</h3>
+          <p>33 seconds. No sound needed.</p>
+          <video controls playsinline preload="metadata" poster="media/how-to-play-poster.jpg" width="1080" height="1920" aria-label="How to play MARIVO: a 33 second video of the 8 steps, with the words on screen and no sound">
+            <source src="media/marivo-how-to-play.mp4" type="video/mp4">
+            Your browser cannot play this video. <a href="media/marivo-how-to-play.mp4">Download the video</a>.
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN THE BOX. Counts and pictures from the rulebook. Swap in product photos when supplied. -->
+  <section class="sheet sheet--blue box" id="box" aria-labelledby="box-title">
+    <div class="pat pat--petals" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 id="box-title" class="h2 h2--center" data-split>What is in the box?</h2>
+      <p class="lede lede--center" data-reveal>Five things. Here is what each one is for.</p>
+      <ul class="box__list" id="box-list" role="list">
+        <li class="box__item">
+          <div class="box__art box__art--board"><img src="img/board.webp" alt="" width="1400" height="1399" loading="lazy"></div>
+          <p class="box__count"><b class="count" data-count="1">1</b><span>board</span></p>
+          <p class="box__use">The whole wedding journey, from START round to the honeymoon.</p>
+        </li>
+        <li class="box__item">
+          <div class="box__art box__art--fan box__art--notes"><img src="img/note.webp" alt="" width="700" height="369" loading="lazy"><img src="img/note.webp" alt="" width="700" height="369" loading="lazy"><img src="img/note.webp" alt="" width="700" height="369" loading="lazy"></div>
+          <p class="box__count"><b class="count" data-count="450">450</b><span>money notes</span></p>
+          <p class="box__use">Game money. The Banker hands it out.</p>
+        </li>
+        <li class="box__item">
+          <div class="box__art box__art--fan box__art--cards"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><img src="img/card-blessing.webp" alt="" width="454" height="700" loading="lazy"><img src="img/card-wahala.webp" alt="" width="460" height="700" loading="lazy"></div>
+          <p class="box__count"><b class="count" data-count="40">40</b><span>cards</span></p>
+          <p class="box__use">Knot Key, Blessing Time and Wedding Wahala cards.</p>
+        </li>
+        <li class="box__item">
+          <div class="box__art box__art--piece"><img src="img/piece.webp" alt="" width="700" height="699" loading="lazy"></div>
+          <p class="box__count"><b class="count" data-count="10">10</b><span>game pieces</span></p>
+          <p class="box__use">Pick one and put it on START.</p>
+        </li>
+        <li class="box__item">
+          <div class="box__art box__art--dice"><img src="img/dice.webp" alt="" width="700" height="489" loading="lazy"></div>
+          <p class="box__count"><b class="count" data-count="2">2</b><span>dice</span></p>
+          <p class="box__use">Roll both on your turn.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ. Questions and answers are the client's approved wording. Do not edit without approval. -->
+  <section class="sheet sheet--paper faq" id="faq" aria-labelledby="faq-title">
+    <div class="pat pat--confetti" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 id="faq-title" class="h2 h2--center" data-split>Questions people ask</h2>
+      <div class="faq__list">
+        <details class="qa" open><summary>What is the age requirement for the game?</summary><p>From ages 13+</p></details>
+        <details class="qa"><summary>How many players are allowed?</summary><p>2–5 players per round</p></details>
+        <details class="qa"><summary>How do I play the game?</summary><p>Check the <a href="#how-to-play">“how to play”</a> section on the website</p></details>
+        <details class="qa"><summary>How do I purchase the game?</summary><p>Click on the <a href="#buy">“Buy now”</a> section of the website</p></details>
+        <details class="qa"><summary>Can I get a customized version of the game?</summary><p>Yes, you can, kindly reach us via <a href="#contact">mail</a></p></details>
+        <details class="qa"><summary>Is there an online version of the game?</summary><p>This is in progress</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOSSARY. Terms and definitions are the client's supplied wording. Do not edit without approval. -->
+  <section class="sheet sheet--ink glossary" id="glossary" aria-labelledby="glossary-title">
+    <div class="pat pat--adire" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 id="glossary-title" class="h2 h2--center" data-split>What do the words mean?</h2>
+      <p class="lede lede--center" data-reveal>Some spaces on the board use Yoruba, Igbo and Hausa words. Find the meaning here.</p>
+      <label class="search" for="glossary-search" data-reveal>
+        <span class="sr">Search for a word</span>
+        <input type="search" id="glossary-search" placeholder="Type a word, like Aso-Ebi" autocomplete="off">
+      </label>
+      <dl class="terms" id="terms">
+          <div class="term">
+            <dt>Bridal Train Toh “Bad”! <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase that literally means ‘Bridal train that is bad.’ to connote that the bridal train looks stunning or gorgeous.</dd>
+          </div>
+          <div class="term">
+            <dt>Zenche <span class="chip">Hausa</span></dt>
+            <dd>Is a Hausa term which means ‘I will say/I affirm’ In a wedding, zenche carries the sense of acceptance, consent, or affirmation, it is like saying ‘I do’ in English weddings.</dd>
+          </div>
+          <div class="term">
+            <dt>Kamu Time Ile Oko Ya <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase that literally means ‘Let’s pick a time, to go to your husband's house.’ To connote that it is time for matrimony.</dd>
+          </div>
+          <div class="term">
+            <dt>Aso - Ebi <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase that literally means ‘Family clothes.’ These are clothes worn to represent a particular family during the wedding ceremony.</dd>
+          </div>
+          <div class="term">
+            <dt>Bridezilla</dt>
+            <dd>A word coined from the addition of ‘bride’ and ‘Godzilla’. A woman whose behavior in planning the details of her wedding is regarded as obsessive or intolerably demanding.</dd>
+          </div>
+          <div class="term">
+            <dt>Naija way</dt>
+            <dd>Literally means ‘Nigerian Way’. This means the Nigerian way of doing things.</dd>
+          </div>
+          <div class="term">
+            <dt>Iyawo Ile <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase that literally means ‘wives in the family.’ Used to refer to the existing wives in the family the new bride married into.</dd>
+          </div>
+          <div class="term">
+            <dt>Walimah <span class="chip">Islamic</span></dt>
+            <dd>An Islamic term that literally means ‘to gather or to assemble’. Used to describe an assembly or party celebrating an Islamic wedding.</dd>
+          </div>
+          <div class="term">
+            <dt>Sharo Tradition Flogging <span class="chip">Fulani</span></dt>
+            <dd>Sharo is a Fulani term used to express the test of young man's manhood by introducing flogging.</dd>
+          </div>
+          <div class="term">
+            <dt>Iya Gbo, Baba Gbo <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba term that literally means ‘Mother has heard, father has heard’ Which are symbolic gestures to acknowledge the parents' consent and blessings for the marriage.</dd>
+          </div>
+          <div class="term">
+            <dt>Iju Ajuju <span class="chip">Igbo</span></dt>
+            <dd>An Igbo phrase that literally means ‘to ask questions’ This refers to the traditional Igbo cultural practice of a family investigating the background, ancestry, and character of the family of their intending spouse to ensure suitability and prevent future disappointments.</dd>
+          </div>
+          <div class="term">
+            <dt>Kunshi <span class="chip">Hausa</span></dt>
+            <dd>A Hausa word that refers to the art of henna application, where intricate designs are drawn on the hands and feet of women and girls for adornment during cultural events like weddings and festivals.</dd>
+          </div>
+          <div class="term">
+            <dt>Oji-Igbo <span class="chip">Igbo</span></dt>
+            <dd>An Igbo word which means ‘Igbo Kolanut.’</dd>
+          </div>
+          <div class="term">
+            <dt>Ose Oji <span class="chip">Igbo</span></dt>
+            <dd>An Igbo word which means ‘Alligator Pepper.’</dd>
+          </div>
+          <div class="term">
+            <dt>Baba ni yen <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase that literally means ‘That is the father/man.’ It is used to describe someone highly respected, wealthy, or influential. Similar to saying ‘He’s the real deal’ or ‘He’s the boss.’</dd>
+          </div>
+          <div class="term">
+            <dt>Odogwu <span class="chip">Igbo</span></dt>
+            <dd>An Igbo title for a great, wealthy, or influential man. It can mean ‘great warrior’ or ‘champion.’ Often used as praise for successful men.</dd>
+          </div>
+          <div class="term">
+            <dt>Odogwu na you biko <span class="chip">Igbo</span></dt>
+            <dd>An Igbo flattering phrase meaning ‘You are the great man/champion, please.’ Often used jokingly or to hype someone up while asking for a favor. ‘Biko’ means ‘please.’</dd>
+          </div>
+          <div class="term">
+            <dt>Ranka Dede <span class="chip">Hausa</span></dt>
+            <dd>A Hausa word that means ‘May you live long’ or ‘Long life to you.’ It is used as a prayer or blessing wishing someone good health and longevity.</dd>
+          </div>
+          <div class="term">
+            <dt>Omugwo <span class="chip">Igbo</span></dt>
+            <dd>An Igbo traditional practice where a mother or older female relative stays with a new mother after childbirth to help care for both mother and baby.</dd>
+          </div>
+          <div class="term">
+            <dt>Alaga Iduro <span class="chip">Yoruba</span></dt>
+            <dd>A Yoruba phrase which means the female coordinator or spokesperson for the groom’s family during a traditional Yoruba wedding ceremony. She directs and anchors the event.</dd>
+          </div>
+          <div class="term">
+            <dt>Alhaji <span class="chip">Hausa</span></dt>
+            <dd>A Hausa title given to a Muslim man who has completed the pilgrimage to Mecca (Hajj). It is also used as a respectful title.</dd>
+          </div>
+      </dl>
+      <p class="terms__empty" id="terms-empty" hidden>No word matches that. Check the spelling and try again.</p>
+      <div class="terms__more"><button class="btn btn--white btn--sm" type="button" id="terms-more">Show all 21 words</button></div>
+    </div>
+  </section>
+
+  <!-- DOWNLOADS (PRD 7.6: rulebook only). The QR code also lists a Playlist and a Prize Vault: not built, the client has not said what they are. -->
+  <section class="sheet sheet--green downloads" id="downloads" aria-labelledby="downloads-title">
+    <div class="wrap download">
+      <div class="book" id="book" aria-hidden="true">
+        <div class="book__pages">
+          <b>Inside</b>
+          <span>Game setup</span><span>Banker role</span><span>Cash allocation</span><span>Special spaces</span><span>How to win</span>
+        </div>
+        <div class="book__cover" id="book-cover">
+          <img src="img/marivo-logo.svg" alt="" width="110" height="44">
+          <span>Rule book</span>
+        </div>
+      </div>
+      <div class="download__text">
+        <h2 id="downloads-title" class="h2" data-split>Get the rulebook</h2>
+        <p class="lede" data-reveal>All the rules in one file. It is 8 pages. Keep it on your phone for game night.</p>
+        <p class="download__label" data-reveal>What is inside</p>
+        <ul class="download__inside" role="list">
+          <li>Game setup</li><li>Banker role</li><li>Cash allocation</li><li>Special spaces</li><li>How to win</li><li>Running out of money</li>
+        </ul>
+        <a class="btn btn--ink btn--lg" data-reveal href="downloads/MARIVO-Rulebook.pdf" download>Download the rulebook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY. No shop link supplied yet: "Buy now" goes to Contact. Replace the href when the client gives a link. -->
+  <!-- The rulebook QR code also lists a Playlist and a Prize Vault. Not built: the client has not said what they are. -->
+  <section class="sheet sheet--pink buy" id="buy" aria-labelledby="buy-title">
+    <div class="pat pat--adire" aria-hidden="true"></div>
+    <img class="float buy__float buy__float--a" src="img/dice.webp" alt="" width="700" height="489" loading="lazy">
+    <img class="float buy__float buy__float--b" src="img/piece.webp" alt="" width="700" height="699" loading="lazy">
+    <div class="wrap buy__inner">
+      <h2 id="buy-title" class="h2 h2--center h2--xl" data-split>Bring MARIVO to your next party</h2>
+      <p class="lede lede--center" data-reveal>Weddings, bridal showers, bachelor parties, or a night in with family.</p>
+      <div class="buy__cta" data-reveal>
+        <a class="btn btn--white btn--lg" href="#contact">Buy now</a>
+        <a class="btn btn--ghost btn--lg" href="#how-to-play">How to play</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT. The form is a letter, after the "Letter of Intent" space on the board.
+       Fields, confirmation message and public details are the client's (PRD 9.1 to 9.3). The quick picks only fill in the purpose box. -->
+  <section class="sheet sheet--orange contact" id="contact" aria-labelledby="contact-title">
+    <div class="pat pat--confetti" aria-hidden="true"></div>
+    <div class="wrap contact__grid">
+      <div class="contact__intro">
+        <h2 id="contact-title" class="h2" data-split>Talk to us</h2>
+        <p class="lede" data-reveal>Want to order, ask a question, or get a custom version? Fill in the letter and send it.</p>
+        <ul class="contact__list" role="list">
+          <li data-reveal><b>Email</b><a href="mailto:marivogames@gmail.com">marivogames@gmail.com</a></li>
+          <li data-reveal><b>Phone</b><a href="tel:07018089299">07018089299</a></li>
+          <!-- Address as supplied. City and state not given: confirm with client. -->
+          <li data-reveal><b>Address</b><span>20 Mobolaji Bank Anthony Way</span></li>
+          <!-- PRD says "marivogame". The rulebook prints "MARIVO_GAME". Confirm with client. -->
+          <li data-reveal><b>Instagram</b><a href="https://www.instagram.com/marivogame" rel="noopener">@marivogame</a></li>
+        </ul>
+      </div>
+
+      <form class="letter" id="contact-form" novalidate>
+        <span class="letter__stamp" id="letter-stamp" aria-hidden="true"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M50 84C50 84 6 56 6 28 6 14 17 5 29 5c9 0 17 5 21 13C54 10 62 5 71 5c12 0 23 9 23 23 0 28-44 56-44 56z" fill="#D63E43"/></svg><i>MARIVO</i></span>
+        <p class="letter__hello">Dear MARIVO,</p>
+        <div class="blank">
+          <label for="cf-name">My name is</label>
+          <input type="text" id="cf-name" name="name" autocomplete="name" placeholder="your name" required>
+        </div>
+        <div class="blank">
+          <label for="cf-email">My email is</label>
+          <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="you@example.com" required>
+        </div>
+        <div class="blank">
+          <label for="cf-phone">My phone number is</label>
+          <input type="tel" id="cf-phone" name="phone" autocomplete="tel" placeholder="your phone number" required>
+        </div>
+        <div class="blank blank--tall">
+          <label for="cf-purpose">My purpose for reaching out is</label>
+          <div class="chips" role="group" aria-label="Quick picks">
+            <button class="chip-btn" type="button" aria-pressed="false" data-purpose="I would like to order the game.">Order the game</button>
+            <button class="chip-btn" type="button" aria-pressed="false" data-purpose="I would like a custom version of the game.">Custom version</button>
+            <button class="chip-btn" type="button" aria-pressed="false" data-purpose="I have a question: ">Ask a question</button>
+            <button class="chip-btn" type="button" aria-pressed="false" data-purpose="">Something else</button>
+          </div>
+          <textarea id="cf-purpose" name="purpose" rows="3" placeholder="Tell us a little more" required></textarea>
+        </div>
+        <div class="letter__foot">
+          <button class="btn btn--ink" type="submit">Send message</button>
+          <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Logo: the brand guide says no outline on the logo. The main logo file has an off-white band around it that shows as an outline on dark colours, so dark backgrounds use the client’s white-out version. -->
+<!-- FOOTER. Company name from the PRD. The board itself prints a trademark line naming Brainbox Marketing Services Limited: ask the client which to show. No privacy policy or terms supplied. -->
+<footer class="sheet sheet--ink footer">
+  <div class="wrap footer__inner">
+    <a href="#top" aria-label="MARIVO, back to top"><img src="img/marivo-logo-white.svg" alt="MARIVO" width="118" height="46" class="footer__logo"></a>
+    <ul class="footer__links" role="list">
+      <li><a href="#about">About the game</a></li>
+      <li><a href="#how-to-play">How to play</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="#glossary">Word meanings</a></li>
+      <li><a href="#downloads">Rulebook</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.instagram.com/marivogame" rel="noopener">Instagram</a></li>
+    </ul>
+    <p class="footer__legal">© 2026 Marivo Board Game Limited. All rights reserved. Designed in Nigeria.</p>
+  </div>
+</footer>
+
+<script src="js/vendor/gsap.min.js" defer></script>
+<script src="js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="js/vendor/lenis.min.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
