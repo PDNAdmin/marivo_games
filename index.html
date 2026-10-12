@@ -14,12 +14,15 @@
 <meta property="og:url" content="https://www.marivogames.com/">
 <meta property="og:image" content="https://www.marivogames.com/img/board.webp">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"MARIVO","category":"Board game","description":"A Nigerian themed wedding board game that celebrates the intricacies of wedding and marriage. 2 to 5 players, ages 13 and up, 30 to 45 minutes.","brand":{"@type":"Brand","name":"MARIVO"},"manufacturer":{"@type":"Organization","name":"Marivo Board Game Limited"},"url":"https://www.marivogames.com/"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"MARIVO","category":"Board game","description":"A Nigerian themed wedding board game that celebrates the intricacies of wedding and marriage. 2 to 5 players, ages 14 and up, 30 to 45 minutes.","brand":{"@type":"Brand","name":"MARIVO"},"manufacturer":{"@type":"Organization","name":"Marivo Board Game Limited"},"url":"https://www.marivogames.com/"}</script>
 <meta name="theme-color" content="#352665">
 <script>document.documentElement.classList.add("js")</script>
 <link rel="preload" href="fonts/Anton-Regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="fonts/Quicksand-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="img/board.webp" as="image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -88,10 +91,10 @@
       <li><a href="#faq">Questions</a></li>
       <li><a href="#glossary">Word meanings</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li class="nav__links-buy"><a href="#buy">Buy now</a></li>
+      <li class="nav__links-buy"><a class="shake" href="#buy">Buy now</a></li>
     </ul>
   </nav>
-  <a class="btn btn--yellow btn--sm nav__buy" href="#buy">Buy now</a>
+  <a class="btn btn--yellow btn--sm nav__buy shake" href="#buy">Buy now</a>
   <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span></button>
 </header>
 
@@ -109,7 +112,7 @@
         <h1 id="hero-title" aria-label="Your personal wedding experience"><span class="w"><span>Your</span></span> <span class="w"><span>personal</span></span> <span class="w"><span>wedding</span></span> <span class="w"><span class="ido">experience</span></span></h1>
         <p class="hero__lede" data-in>MARIVO takes you through a Nigerian wedding, from the first family introduction all the way to the honeymoon.</p>
         <div class="hero__cta" data-in>
-          <a class="btn btn--yellow" href="#buy">Buy now</a>
+          <a class="btn btn--yellow shake" href="#buy">Buy now</a>
           <a class="btn btn--ghost" href="#how-to-play">How to play</a>
         </div>
       </div>
@@ -157,16 +160,15 @@
           <p>Three are won on corners of the board: Venue, Holy Book and Officiant. The other two, Spouse and Ring, are hidden in the Blessing Time cards.</p>
         </li>
       </ol>
-      <p class="tour__hint" data-in aria-hidden="true">Scroll to walk round the board</p>
     </div>
   </section>
 
   <!-- QUICK FACTS. PRD 7.4 says new players get the age limit and player count wrong, so they sit right under the opening.
-       Age: the PRD and the approved FAQ both say 13+. The rulebook cover prints 14+. Confirm with client. -->
+       Age: 14+, as printed on the rulebook cover (confirmed by the client). -->
   <section class="facts-bar" aria-label="Game facts">
     <ul class="wrap facts-bar__list" role="list">
       <li><b>2–5</b><span>players</span></li>
-      <li><b>13+</b><span>ages</span></li>
+      <li><b>14+</b><span>ages</span></li>
       <li><b>30–45</b><span>minutes a game</span></li>
       <li><b>Easy</b><span>beginner-friendly</span></li>
     </ul>
@@ -182,7 +184,7 @@
           <p class="lede" data-reveal>MARIVO is a Nigerian wedding board game. It celebrates everything that goes into a wedding and a marriage.</p>
           <p class="lede" data-reveal>You plan and pay with game money, just like a real wedding, so you have to think about the best way to win.</p>
         </div>
-        <img class="about__art" data-reveal src="img/hero-characters.webp" alt="Six wedding guests in traditional Nigerian clothes, standing arm in arm" width="1600" height="640" loading="lazy">
+        <img class="about__art" src="img/hero-characters.webp" alt="Six wedding guests in traditional Nigerian clothes, standing arm in arm" width="1600" height="640" loading="lazy">
       </div>
 
     </div>
@@ -203,7 +205,7 @@
         <li>
           <button class="key" type="button" aria-pressed="false" style="--tint:#fde3ee" aria-label="Spouse Secured. You need a spouse to get married. Tap to collect.">
             <span class="key__flip">
-              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><span class="key__tap">Tap to collect</span></span>
               <span class="key__face key__face--front"><span class="key__art key__art--heart"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M50 84C50 84 6 56 6 28 6 14 17 5 29 5c9 0 17 5 21 13C54 10 62 5 71 5c12 0 23 9 23 23 0 28-44 56-44 56z" fill="#D63E43"/></svg></span><b>Spouse Secured</b><span class="key__why">You need a spouse to get married.</span></span>
             </span>
           </button>
@@ -211,7 +213,7 @@
         <li>
           <button class="key" type="button" aria-pressed="false" style="--tint:#d9f3fc" aria-label="Ring Secured. You need a ring to propose. Tap to collect.">
             <span class="key__flip">
-              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><span class="key__tap">Tap to collect</span></span>
               <span class="key__face key__face--front"><span class="key__art"><img src="img/ring.webp" alt="" width="700" height="700" loading="lazy"></span><b>Ring Secured</b><span class="key__why">You need a ring to propose.</span></span>
             </span>
           </button>
@@ -219,7 +221,7 @@
         <li>
           <button class="key" type="button" aria-pressed="false" style="--tint:#e4f2da" aria-label="Venue Secured. The wedding needs a place. Tap to collect.">
             <span class="key__flip">
-              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><span class="key__tap">Tap to collect</span></span>
               <span class="key__face key__face--front"><span class="key__art key__art--fill"><img src="img/venue-2.webp" alt="" width="700" height="700" loading="lazy"></span><b>Venue Secured</b><span class="key__why">The wedding needs a place.</span></span>
             </span>
           </button>
@@ -227,7 +229,7 @@
         <li>
           <button class="key" type="button" aria-pressed="false" style="--tint:#fde8d6" aria-label="Officiant Secured. A religious, traditional or government official must join the couple. Tap to collect.">
             <span class="key__flip">
-              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><span class="key__tap">Tap to collect</span></span>
               <span class="key__face key__face--front"><span class="key__art"><img src="img/officiant.webp" alt="" width="700" height="700" loading="lazy"></span><b>Officiant Secured</b><span class="key__why">A religious, traditional or government official must join the couple.</span></span>
             </span>
           </button>
@@ -235,7 +237,7 @@
         <li>
           <button class="key" type="button" aria-pressed="false" style="--tint:#fff3cc" aria-label="Holy Book. A guide to your duties as a couple. Tap to collect.">
             <span class="key__flip">
-              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><span class="key__tap">Tap to collect</span></span>
+              <span class="key__face key__face--back"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><span class="key__tap">Tap to collect</span></span>
               <span class="key__face key__face--front"><span class="key__art"><img src="img/holybook.webp" alt="" width="700" height="700" loading="lazy"></span><b>Holy Book</b><span class="key__why">A guide to your duties as a couple.</span></span>
             </span>
           </button>
@@ -255,8 +257,9 @@
     <div class="play__pin" id="play-pin">
       <div class="play__top">
         <h2 id="play-title" class="h2">How to play</h2>
+        <a class="play__skip" href="#after-steps">Skip steps</a>
         <!-- The client asked for these three points to be shown (PRD 7.4): age limit, number of players, read the rules first. -->
-        <p class="play__note">2–5 players · Ages 13+ · Read the rulebook before you play</p>
+        <p class="play__note">2–5 players · Ages 14+ · Read the rulebook before you play</p>
       </div>
 
       <div class="play__grid">
@@ -294,15 +297,21 @@
         </ol>
       </div>
 
-      <div class="play__progress">
-        <div class="dots"><button class="dot-btn" type="button" data-go="0" aria-label="Go to step 1: Set up the board"></button><button class="dot-btn" type="button" data-go="1" aria-label="Go to step 2: Pick a Banker"></button><button class="dot-btn" type="button" data-go="2" aria-label="Go to step 3: Everyone to START"></button><button class="dot-btn" type="button" data-go="3" aria-label="Go to step 4: Who goes first?"></button><button class="dot-btn" type="button" data-go="4" aria-label="Go to step 5: Roll and move"></button><button class="dot-btn" type="button" data-go="5" aria-label="Go to step 6: Do what the space says"></button><button class="dot-btn" type="button" data-go="6" aria-label="Go to step 7: Collect the 5 Knot Keys"></button><button class="dot-btn" type="button" data-go="7" aria-label="Go to step 8: You win!"></button></div>
-        <p class="play__count">Step <b id="step-now">1</b> of 8<span class="play__keep"> · keep scrolling</span></p>
+      <!-- Three ways through the steps, all equal: scroll, swipe sideways, or the buttons. The dots and arrow keys work too. -->
+      <div class="play__controls">
+        <button class="btn btn--ghost btn--sm" type="button" id="step-back">Back</button>
+        <div class="play__mid">
+          <div class="dots"><button class="dot-btn" type="button" data-go="0" aria-label="Go to step 1: Set up the board"></button><button class="dot-btn" type="button" data-go="1" aria-label="Go to step 2: Pick a Banker"></button><button class="dot-btn" type="button" data-go="2" aria-label="Go to step 3: Everyone to START"></button><button class="dot-btn" type="button" data-go="3" aria-label="Go to step 4: Who goes first?"></button><button class="dot-btn" type="button" data-go="4" aria-label="Go to step 5: Roll and move"></button><button class="dot-btn" type="button" data-go="5" aria-label="Go to step 6: Do what the space says"></button><button class="dot-btn" type="button" data-go="6" aria-label="Go to step 7: Collect the 5 Knot Keys"></button><button class="dot-btn" type="button" data-go="7" aria-label="Go to step 8: You win!"></button></div>
+          <p class="play__count">Step <b id="step-now">1</b> of 8</p>
+        </div>
+        <button class="btn btn--ink btn--sm" type="button" id="step-next">Next</button>
       </div>
+      <p class="play__how">Scroll, swipe, or tap Next</p>
     </div>
 
     </div>
 
-    <div class="wrap play__after">
+    <div class="wrap play__after" id="after-steps">
       <div class="know" data-reveal>
         <h3 class="h3">Good to know</h3>
         <ul class="know__list" role="list">
@@ -320,17 +329,17 @@
           <h3 class="h3">Before you play</h3>
           <ol class="ready__list">
             <li>Get 2 to 5 players together.</li>
-            <li>Everyone should be 13 or older.</li>
+            <li>Everyone should be 14 or older.</li>
             <li>Set aside 30 to 45 minutes.</li>
             <li>Read the rulebook first.</li>
           </ol>
           <a class="btn btn--ink" href="downloads/MARIVO-Rulebook.pdf" download>Download the rulebook</a>
         </div>
-        <!-- The tutorial video (PRD 4.3 and section 5). Made from the same 8 steps. It has no sound, and the words are on screen. -->
+        <!-- The tutorial video (PRD 4.3 and section 5). It covers every rule in the rulebook. The words are on screen; a voice-over will be added later. -->
         <div class="ready__video" data-reveal>
           <h3 class="h3">Watch how to play</h3>
-          <p>33 seconds. No sound needed.</p>
-          <video controls playsinline preload="metadata" poster="media/how-to-play-poster.jpg" width="1080" height="1920" aria-label="How to play MARIVO: a 33 second video of the 8 steps, with the words on screen and no sound">
+          <p>Every rule, step by step, in under 5 minutes. No sound needed.</p>
+          <video controls playsinline preload="metadata" poster="media/how-to-play-poster.jpg" width="1080" height="1920" aria-label="How to play MARIVO: a video of under 5 minutes that explains every rule, with the words on screen and no sound">
             <source src="media/marivo-how-to-play.mp4" type="video/mp4">
             Your browser cannot play this video. <a href="media/marivo-how-to-play.mp4">Download the video</a>.
           </video>
@@ -357,7 +366,7 @@
           <p class="box__use">Game money. The Banker hands it out.</p>
         </li>
         <li class="box__item">
-          <div class="box__art box__art--fan box__art--cards"><img src="img/card-knot.webp" alt="" width="451" height="700" loading="lazy"><img src="img/card-blessing.webp" alt="" width="454" height="700" loading="lazy"><img src="img/card-wahala.webp" alt="" width="460" height="700" loading="lazy"></div>
+          <div class="box__art box__art--fan box__art--cards"><img src="img/card-knot.webp" alt="" width="900" height="1391" loading="lazy"><img src="img/card-blessing.webp" alt="" width="454" height="700" loading="lazy"><img src="img/card-wahala.webp" alt="" width="460" height="700" loading="lazy"></div>
           <p class="box__count"><b class="count" data-count="40">40</b><span>cards</span></p>
           <p class="box__use">Knot Key, Blessing Time and Wedding Wahala cards.</p>
         </li>
@@ -381,12 +390,12 @@
     <div class="wrap">
       <h2 id="faq-title" class="h2 h2--center" data-split>Questions people ask</h2>
       <div class="faq__list">
-        <details class="qa" open><summary>What is the age requirement for the game?</summary><p>From ages 13+</p></details>
+        <details class="qa" open><summary>What is the age requirement for the game?</summary><p>From ages 14+</p></details>
         <details class="qa"><summary>How many players are allowed?</summary><p>2–5 players per round</p></details>
         <details class="qa"><summary>How do I play the game?</summary><p>Check the <a href="#how-to-play">“how to play”</a> section on the website</p></details>
         <details class="qa"><summary>How do I purchase the game?</summary><p>Click on the <a href="#buy">“Buy now”</a> section of the website</p></details>
         <details class="qa"><summary>Can I get a customized version of the game?</summary><p>Yes, you can, kindly reach us via <a href="#contact">mail</a></p></details>
-        <details class="qa"><summary>Is there an online version of the game?</summary><p>This is in progress</p></details>
+        <details class="qa"><summary>Is there an online version of the game?</summary><p>Coming Soon</p></details>
       </div>
     </div>
   </section>
@@ -488,7 +497,6 @@
           </div>
       </dl>
       <p class="terms__empty" id="terms-empty" hidden>No word matches that. Check the spelling and try again.</p>
-      <div class="terms__more"><button class="btn btn--white btn--sm" type="button" id="terms-more">Show all 21 words</button></div>
     </div>
   </section>
 
@@ -527,7 +535,7 @@
       <h2 id="buy-title" class="h2 h2--center h2--xl" data-split>Bring MARIVO to your next party</h2>
       <p class="lede lede--center" data-reveal>Weddings, bridal showers, bachelor parties, or a night in with family.</p>
       <div class="buy__cta" data-reveal>
-        <a class="btn btn--white btn--lg" href="#contact">Buy now</a>
+        <a class="btn btn--white btn--lg shake" href="#contact">Buy now</a>
         <a class="btn btn--ghost btn--lg" href="#how-to-play">How to play</a>
       </div>
     </div>
@@ -546,8 +554,8 @@
           <li data-reveal><b>Phone</b><a href="tel:07018089299">07018089299</a></li>
           <!-- Address as supplied. City and state not given: confirm with client. -->
           <li data-reveal><b>Address</b><span>20 Mobolaji Bank Anthony Way</span></li>
-          <!-- PRD says "marivogame". The rulebook prints "MARIVO_GAME". Confirm with client. -->
-          <li data-reveal><b>Instagram</b><a href="https://www.instagram.com/marivogame" rel="noopener">@marivogame</a></li>
+          <!-- Instagram handle confirmed as marivo_game (it matches the rulebook). -->
+          <li data-reveal><b>Instagram</b><a href="https://www.instagram.com/marivo_game" rel="noopener">@marivo_game</a></li>
         </ul>
       </div>
 
@@ -597,11 +605,18 @@
       <li><a href="#glossary">Word meanings</a></li>
       <li><a href="#downloads">Rulebook</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="https://www.instagram.com/marivogame" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.instagram.com/marivo_game" rel="noopener">Instagram</a></li>
     </ul>
     <p class="footer__legal">© 2026 Marivo Board Game Limited. All rights reserved. Designed in Nigeria.</p>
   </div>
 </footer>
+
+<!-- The "keep scrolling" cue. It is for sighted mouse and touch users only: the page reads in order without it. -->
+<div class="cue" id="cue" aria-hidden="true">
+  <span class="cue__die"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+  <span id="cue-text">Keep scrolling</span>
+  <svg class="cue__arrow" viewBox="0 0 14 14" width="14" height="14"><path d="M2 4.500l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
 
 <script src="js/vendor/gsap.min.js" defer></script>
 <script src="js/vendor/ScrollTrigger.min.js" defer></script>

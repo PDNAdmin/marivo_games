@@ -312,11 +312,11 @@
       scrollTrigger: { trigger: ".faq__list", start: "top 82%", once: true }
     });
 
-    // Word meanings: the first cards flip up like cards being turned over
-    gsap.from($$("#terms .term").slice(0, 6), {
-      rotationX: -80, y: 30, autoAlpha: 0, transformOrigin: "50% 0%", transformPerspective: 700,
-      duration: 0.7, ease: "power3.out", stagger: 0.07,
-      scrollTrigger: { trigger: "#terms", start: "top 84%", once: true }
+    // Word meanings: each row of cards flips up as it comes into view, like cards being turned over
+    gsap.set("#terms .term", { rotationX: -80, y: 30, autoAlpha: 0, transformOrigin: "50% 0%", transformPerspective: 700 });
+    ScrollTrigger.batch("#terms .term", {
+      start: "top 90%", once: true,
+      onEnter: function (batch) { gsap.to(batch, { rotationX: 0, y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out", stagger: 0.07, overwrite: true }); }
     });
 
     // The rulebook: the cover opens as you scroll to it, then the chapter names drop in
@@ -354,6 +354,42 @@
       }).observe(document.body);
     }
   }
+
+  /* ---------- the "keep scrolling" cue ----------
+     It appears only after the page has been still for a moment, and only in places that can look like the end:
+     the opening screen, the board tour (it holds still while you scroll), and the Buy section.
+     How to Play has its own Back and Next buttons and says how to move, so the cue stays out of its way.
+     It hides the moment the page moves. */
+  (function () {
+    var cue = $("#cue"), label = $("#cue-text");
+    if (!cue || !animate) return;
+    var timer;
+    function holding(el) { // a section that is filling the screen, with more of it still to come
+      if (!el) return false;
+      var r = el.getBoundingClientRect();
+      return r.top <= 1 && r.bottom > window.innerHeight + 80;
+    }
+    function message() {
+      if (holding($("#top"))) return window.scrollY < 40 ? "Scroll to walk round the board" : "Keep scrolling";
+      var buy = $("#buy").getBoundingClientRect();
+      if (buy.top < window.innerHeight * 0.4 && buy.bottom > window.innerHeight * 0.8) return "More below"; // only while the next section is not showing yet
+      return "";
+    }
+    function check() {
+      if (root.classList.contains("is-loading")) { timer = setTimeout(check, 600); return; }
+      var text = message();
+      if (!text) return;
+      label.textContent = text;
+      cue.classList.add("is-on");
+    }
+    function moved() {
+      cue.classList.remove("is-on");
+      clearTimeout(timer);
+      timer = setTimeout(check, 1200);
+    }
+    window.addEventListener("scroll", moved, { passive: true });
+    timer = setTimeout(check, 1800);
+  })();
 
   /* ---------- confetti ---------- */
   var PARTY = ["#EA5297", "#00B6ED", "#75B94E", "#F28A3D", "#FFCE3A", "#F7F7F6"];
@@ -408,7 +444,7 @@
      Positions on the board (START, the Blessing Time space, the card piles, the three Knot Key corners) are measured from the real board. */
   (function () {
     var play = $("#how-to-play"), pin = $("#play-pin"), scene = $("#scene");
-    var beats = $$("#beats .beat"), dots = $$(".dot-btn"), now = $("#step-now");
+    var beats = $$("#beats .beat"), dots = $$(".dot-btn"), now = $("#step-now"), back = $("#step-back"), next = $("#step-next");
     if (!play || !scene || !beats.length || !animate) return; // without animation the steps stay a plain list
     play.classList.add("is-play");
 
@@ -440,6 +476,8 @@
       if (i === active) return;
       active = i;
       now.textContent = i + 1;
+      back.disabled = i === 0;
+      next.textContent = i === N - 1 ? "Finish" : "Next";
       dots.forEach(function (d, k) {
         d.classList.toggle("is-done", k < i);
         d.classList.toggle("is-active", k === i);
@@ -551,36 +589,45 @@
       if (Math.abs(y - window.scrollY) > 8) scrollToY(y);
     });
 
-    dots.forEach(function (d) {
-      d.addEventListener("click", function () {
-        var st = tl.scrollTrigger, i = parseInt(d.dataset.go, 10);
-        scrollToY(st.start + (st.end - st.start) * ((i + 0.75) / tl.duration()));
-      });
+    // Every way of moving through the steps ends up here
+    function go(i) {
+      if (i < 0) return;
+      if (i > N - 1) { var after = $("#after-steps"); scrollToY(after.getBoundingClientRect().top + window.scrollY - 8); return; } // past the last step
+      scrollToY(restY(i));
+    }
+    next.addEventListener("click", function () { go(active + 1); });
+    back.addEventListener("click", function () { go(active - 1); });
+    dots.forEach(function (d) { d.addEventListener("click", function () { go(parseInt(d.dataset.go, 10)); }); });
+
+    // swipe sideways on the steps: left for the next one, right for the one before
+    var touch = null;
+    pin.addEventListener("touchstart", function (e) { var t = e.changedTouches[0]; touch = { x: t.clientX, y: t.clientY }; }, { passive: true });
+    pin.addEventListener("touchend", function (e) {
+      if (!touch) return;
+      var t = e.changedTouches[0], dx = t.clientX - touch.x, dy = t.clientY - touch.y;
+      touch = null;
+      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.5) go(active + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    // arrow keys, while the steps are on screen
+    document.addEventListener("keydown", function (e) {
+      var st = tl.scrollTrigger;
+      if (!st || !st.isActive || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); go(active + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(active - 1); }
     });
+
     setActive(0);
   })();
 
-  /* ---------- glossary: show a few, search all ---------- */
+  /* ---------- glossary: every word is shown, and the box filters them ---------- */
   (function () {
-    var input = $("#glossary-search"), list = $("#terms"), empty = $("#terms-empty"), more = $("#terms-more");
+    var input = $("#glossary-search"), list = $("#terms"), empty = $("#terms-empty");
     if (!input || !list) return;
-    var terms = $$(".term", list), expanded = false;
+    var terms = $$(".term", list);
 
     // "Aso-Ebi", "aso ebi" and "Aso - Ebi" should all match
     function norm(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, ""); }
-    function showAll() {
-      list.classList.remove("is-collapsed");
-      if (gsap) gsap.set(terms, { y: 0, autoAlpha: 1 });
-      if (ScrollTrigger) ScrollTrigger.refresh();
-    }
-
-    list.classList.add("is-collapsed");
-    more.addEventListener("click", function () {
-      expanded = true;
-      more.parentNode.hidden = true;
-      showAll();
-      if (animate) gsap.from(terms.slice(6), { y: 24, autoAlpha: 0, duration: 0.6, ease: "power3.out", stagger: 0.03 });
-    });
 
     input.addEventListener("input", function () {
       var q = norm(input.value), shown = 0;
@@ -590,16 +637,24 @@
         if (match) shown++;
       });
       empty.hidden = shown > 0;
-      if (q) { more.parentNode.hidden = true; showAll(); }
-      else if (!expanded) { list.classList.add("is-collapsed"); more.parentNode.hidden = false; if (ScrollTrigger) ScrollTrigger.refresh(); }
+      // a match must never stay hidden because its entrance has not played yet
+      if (gsap) gsap.set(terms, { rotationX: 0, y: 0, autoAlpha: 1, overwrite: true });
+      if (ScrollTrigger) ScrollTrigger.refresh();
     });
   })();
 
   /* ---------- contact form ---------- */
   (function () {
-    // Set this to a form service URL (Formspree, Web3Forms, etc.) that delivers to marivogames@gmail.com.
-    // While it is empty, the form opens the visitor's email app with the message filled in.
-    var FORM_ENDPOINT = "";
+    // EmailJS sends the letter to marivogames@gmail.com. Paste the three values from the EmailJS dashboard here.
+    // (The public key is meant to be public, so it is safe in this file.)
+    // While any of them is empty, the form opens the visitor's email app with the message filled in.
+    var EMAILJS = {
+      publicKey: "iObj3kQUHg9yzuH-9",   // Account > General > Public Key
+      serviceId: "service_3uwn8ub",     // Email Services > the service's ID
+      templateId: "template_oupzf3l"    // Email Templates > the template's ID
+    };
+    // The template can use these names: {{name}} {{email}} {{phone}} {{purpose}}
+    // The client's confirmation line goes to the visitor from the template's Auto-Reply tab.
     var TO = "marivogames@gmail.com";
     var THANKS = "Thank you for reaching out, we will get back to you shortly.";
 
@@ -663,27 +718,36 @@
         purpose: form.elements.purpose.value.trim()
       };
 
-      if (!FORM_ENDPOINT) {
+      if (!EMAILJS.publicKey || !EMAILJS.serviceId || !EMAILJS.templateId) {
         var body = "Name: " + data.name + "\nEmail: " + data.email + "\nPhone Number: " + data.phone + "\n\nPurpose for reaching out:\n" + data.purpose;
         window.location.href = "mailto:" + TO + "?subject=" + encodeURIComponent("MARIVO website enquiry") + "&body=" + encodeURIComponent(body);
         say("Your email app should open with your message. Press send there to finish.");
         return;
       }
 
+      var sendBtn = form.querySelector("button[type=submit]");
+      sendBtn.disabled = true; // one letter per press
       say("Sending…");
-      fetch(FORM_ENDPOINT, {
+      fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: EMAILJS.serviceId,
+          template_id: EMAILJS.templateId,
+          user_id: EMAILJS.publicKey,
+          template_params: data
+        })
       })
         .then(function (res) {
           if (!res.ok) throw new Error("Request failed");
           form.reset();
+          picks.forEach(function (p) { p.setAttribute("aria-pressed", "false"); });
           say(THANKS);
         })
         .catch(function () {
           say("Your message did not send. Please try again, or email " + TO + ".", "error");
-        });
+        })
+        .then(function () { sendBtn.disabled = false; });
     });
   })();
 })();

@@ -36,6 +36,17 @@ button{font:inherit;color:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
 
+/* the "keep scrolling" cue: a small pill with a die that tumbles. It never blocks a tap, and it only shows when the page is still. */
+.cue{position:fixed;z-index:55;right:14px;bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:9px;padding:7px 15px 7px 7px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:700;font-size:.9rem;line-height:1;white-space:nowrap;pointer-events:none;opacity:0;translate:0 18px;transition:opacity .35s,translate .5s var(--ease)}
+.cue.is-on{opacity:1;translate:0 0}
+.cue__die{display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);gap:1.5px;width:28px;height:28px;padding:5px;border-radius:8px;background:#F6F0DF}
+.cue__die i{border-radius:50%;background:var(--red);opacity:0}
+.cue__die i:nth-child(1),.cue__die i:nth-child(5),.cue__die i:nth-child(9){opacity:1}
+.cue.is-on .cue__die{animation:cueRoll 2.6s var(--ease) infinite}
+.cue.is-on .cue__arrow{animation:cueDown 1.3s ease-in-out infinite}
+@keyframes cueRoll{0%,52%{rotate:0deg;translate:0 0}68%{rotate:95deg;translate:0 -6px}84%,100%{rotate:180deg;translate:0 0}}
+@keyframes cueDown{50%{translate:0 3px}}
+
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;height:56px;padding:0 30px;border-radius:999px;border:1.5px solid transparent;font:700 1rem/1 var(--body);text-decoration:none;white-space:nowrap;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background-color .2s,color .2s}
 .btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -16px rgba(0,0,18,.55)}
@@ -258,6 +269,19 @@ html:not(.js) .loader,.loader.is-done{display:none}
 .dot-btn.is-active{width:28px;background:var(--ink)}
 .play__count{margin:0;font-weight:700;font-size:.88rem}
 
+/* Back / Next, the dots, and the line that says how to move through the steps */
+.play__controls,.play__how,.play__skip{display:none}
+.is-play .play__controls{display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,30px);padding-inline:var(--gutter)}
+.play__mid{display:flex;flex-direction:column;align-items:center;gap:7px}
+.is-play .play__controls .btn{min-width:92px}
+.is-play .play__how{display:block;margin:-4px 0 0;text-align:center;font-weight:700;font-size:.88rem}
+/* Next gives a small pulse so the eye finds it */
+.is-play #step-next{animation:nextPulse 2.8s ease-in-out infinite}
+@keyframes nextPulse{0%,70%,100%{scale:1}80%{scale:1.08}90%{scale:.98}}
+/* Skip sits in the top corner, away from where thumbs rest, so it is not tapped by mistake */
+.play__top{position:relative}
+.is-play .play__skip{display:block;position:absolute;top:0;right:var(--gutter);padding:8px 2px;font-weight:700;font-size:.84rem;text-underline-offset:3px}
+
 /* things on the board */
 .scene__arrow{position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible;pointer-events:none}
 .scene__arrow path{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100}
@@ -342,10 +366,7 @@ html:not(.js) .loader,.loader.is-done{display:none}
 .term{padding:18px 22px 20px;border-radius:22px;background:rgba(247,247,246,.07)}
 .term dt{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:6px;font:400 1.3rem/1.15 var(--display);text-transform:uppercase}
 .term dd{margin:0;font-size:.98rem;line-height:1.5;color:rgba(247,247,246,.8)}
-.terms.is-collapsed .term:nth-child(n+7){display:none}
 .terms__empty{margin:26px 0 0;text-align:center;font-weight:700;font-size:1.1rem}
-.terms__more{display:flex;justify-content:center;margin-top:26px}
-html:not(.js) .terms__more{display:none}
 
 /* faq */
 .faq__list{max-width:780px;margin:clamp(20px,3vw,36px) auto 0;display:flex;flex-direction:column;gap:12px}
@@ -378,8 +399,11 @@ html:not(.js) .terms__more{display:none}
 .download__inside li{padding:7px 16px;border-radius:999px;background:var(--paper);font-weight:700;font-size:.95rem}
 
 /* buy */
-.buy .btn--white{animation:nudgeBuy 4.5s ease-in-out infinite}
-@keyframes nudgeBuy{0%,82%,100%{rotate:0deg}86%{rotate:-4deg}90%{rotate:4deg}94%{rotate:-2deg}}
+/* every "Buy now" button gives a small shake every few seconds. It rests while you point at it. */
+.shake{animation:nudgeBuy 6s ease-in-out infinite}
+.nav .shake{animation-delay:-2s}
+.shake:hover,.shake:focus-visible{animation:none}
+@keyframes nudgeBuy{0%,84%,100%{rotate:0deg}87%{rotate:-4deg}90%{rotate:4deg}93%{rotate:-3deg}96%{rotate:2deg}}
 .buy{overflow:hidden;text-align:center}
 .buy__inner{position:relative;z-index:2}
 .buy__cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
@@ -455,6 +479,9 @@ html:not(.js) .terms__more{display:none}
   .is-tour .hero__cta,.is-tour .facts{justify-content:center}
   .is-tour .board{--bs:min(42vh,80vw);margin-top:calc(var(--bs) / -2 - 14vh)}
   .is-tour .tour__hint{display:none}
+  /* leave a strip at the bottom of the screen for the keep-scrolling cue */
+  .is-tour .tour__caps{bottom:72px}
+  .cue{font-size:.84rem}
   .cap{padding:14px 18px;border-radius:22px}
   .cap__n{width:36px;height:36px;font-size:1.15rem}
   .cap__chips li{font-size:.78rem;padding:3px 10px}
@@ -477,7 +504,8 @@ html:not(.js) .terms__more{display:none}
   .is-play .beat__n{display:none}
   .is-play .beat__t{font-size:clamp(1.6rem,7vw,2.3rem)}
   .is-play .beat p{font-size:clamp(.98rem,3.9vw,1.12rem)}
-  .play__keep{display:none}
+  .is-play .play__controls .btn{min-width:76px;padding:0 16px}
+  .is-play .play__top .h2{padding-inline:70px}
   .keys{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);scrollbar-width:none;margin-inline:calc(var(--gutter) * -1);padding:12px var(--gutter) 30px}
   .keys::-webkit-scrollbar{display:none}
   .keys li{flex:0 0 min(64vw,250px);scroll-snap-align:center}
@@ -498,7 +526,7 @@ html:not(.js) .terms__more{display:none}
   .hero__cta .btn{height:52px;padding:0 24px}
   .terms{grid-template-columns:minmax(0,1fr)}
   .buy__cta .btn{width:100%}
-  .buy__float--a{top:4%}.buy__float--b{bottom:4%}
+  .buy__float--a{top:3%;left:3%;width:58px}.buy__float--b{bottom:auto;top:1%;right:3%;width:70px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
