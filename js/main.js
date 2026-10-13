@@ -340,6 +340,10 @@
 
     // Re-measure whenever the page changes height (fonts arriving, pictures loading, a section opening),
     // so nothing is ever animated from a stale position
+    // The wide and narrow layouts place things differently, and positions measured in one are wrong in the other
+    // (the step titles ended up on top of the board). So when the window crosses between them, start the page afresh.
+    window.matchMedia("(max-width: 899px)").addEventListener("change", function () { window.location.reload(); });
+
     ScrollTrigger.config({ ignoreMobileResize: true });
     window.addEventListener("load", function () { ScrollTrigger.refresh(); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
